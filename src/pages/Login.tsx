@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 
 function Login() {
@@ -7,7 +6,6 @@ function Login() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +17,7 @@ function Login() {
         password
       });
       if (error) throw error;
-      navigate('/dashboard');
+      // No need to manually navigate - App.tsx will handle this via the session change
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -38,7 +36,10 @@ function Login() {
       setError(null);
       const { error } = await supabase.auth.signUp({
         email,
-        password
+        password,
+        options: {
+          emailRedirectTo: window.location.origin + '/dashboard'
+        }
       });
       if (error) throw error;
       setError('Check your email for the confirmation link');
