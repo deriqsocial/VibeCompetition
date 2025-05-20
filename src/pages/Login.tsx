@@ -1,21 +1,21 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email,
-        password,
-        options: {
-          redirectTo: 'https://effervescent-gingersnap-dfe092.netlify.app/dashboard'
-        }
+        password
       });
       if (error) throw error;
+      navigate('/dashboard');
     } catch (error) {
       console.error('Error logging in:', error);
     }
