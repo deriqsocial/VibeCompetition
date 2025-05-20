@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useEffect, useState } from 'react';
 import { supabase } from './lib/supabaseClient';
 import Login from './pages/Login';
-import Dashboard from 'ges/Dashboard';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   const [session, setSession] = useState(null);
@@ -30,5 +30,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;
