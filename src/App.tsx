@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
 // Create an AuthProvider component to handle authentication
-function AuthProvider({ children }: { children: React.ReactNode }) {
+function AuthProvider() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
@@ -42,7 +42,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     // Subscribe to auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       setLoading(false);
     });
@@ -84,9 +84,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        {/* Routes are now handled by AuthProvider */}
-      </AuthProvider>
+      <AuthProvider />
     </Router>
   );
 }
