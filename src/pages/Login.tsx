@@ -11,6 +11,9 @@ function Login() {
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
+        options: {
+          redirectTo: 'https://effervescent-gingersnap-dfe092.netlify.app/dashboard'
+        }
       });
       if (error) throw error;
     } catch (error) {

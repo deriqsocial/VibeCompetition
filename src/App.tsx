@@ -1,12 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Session } from '@supabase/supabase-js';
 import { supabase } from './lib/supabaseClient';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
-export default function App() {
-  const [session, setSession] = useState<Session | null>(null);
+function App() {
+  const [session, setSession] = useState(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -31,3 +30,5 @@ export default function App() {
     </Router>
   );
 }
+
+export default App;
